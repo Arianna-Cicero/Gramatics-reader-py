@@ -31,7 +31,6 @@ cd FLPA
 2. Install the required dependencies:
 
 ```bash
-Copiar código
 pip install ply
 ```
 
