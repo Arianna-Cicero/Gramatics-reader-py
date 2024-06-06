@@ -1,5 +1,5 @@
 from part_a import main as part_a_main
-from part_b import main as part_b_main
+from B.part_b import main as part_b_main
 from part_c import main as part_c_main
 from part_d import main as part_d_main
 from part_e import main as part_e_main
