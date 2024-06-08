@@ -30,7 +30,7 @@ t_PLUS = r'\+'
 t_MINUS = r'[-–—]'
 # t_STRING = r'\"([^\\"]|\\.)*\"|\'([^\\\']|\\.)*\''
 
-# t_MULTIPLICACAO = r'\*'
+t_MULTIPLICACAO = r'\*'
 # t_DIVISAO = r'/'
 # t_ATRIBUICAO = r'='
 # t_LBRACE = r'\{'
