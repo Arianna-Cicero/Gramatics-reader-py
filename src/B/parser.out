@@ -2,370 +2,254 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Grammar
 
-Rule 0     S' -> instrucao
-Rule 1     instrucao -> ESCREVER LPAREN valor RPAREN
-Rule 2     instrucao -> atribuicao
-Rule 3     atribuicao -> IDENTIFICADOR = valor
-Rule 4     valor -> STRING
-Rule 5     valor -> expressao
-Rule 6     expressao -> expressao PLUS expressao
-Rule 7     expressao -> expressao MINUS expressao
-Rule 8     expressao -> LPAREN expressao RPAREN
-Rule 9     expressao -> NUMERO
-Rule 10    expressao -> IDENTIFICADOR
-Rule 11    expressao -> INTERPOLACAO
-Rule 12    expressao -> CARACTER_ESPECIAL
-Rule 13    expressao -> CARACTER_ACENTUADO
-Rule 14    expressao -> CARACTER_NAO_IMPRIMIVEL
+Rule 0     S' -> S
+Rule 1     S -> comando
+Rule 2     comando -> ESCREVER LPAREN expressao RPAREN
+Rule 3     expressao -> expressao PLUS expressao
+Rule 4     expressao -> expressao MINUS expressao
+Rule 5     expressao -> LPAREN expressao RPAREN
+Rule 6     expressao -> NUMERO
+Rule 7     expressao -> STRING
+Rule 8     expressao -> CARACTER_ESPECIAL
+Rule 9     expressao -> CARACTER_ACENTUADO
 
 Terminals, with rules where they appear
 
-=                    : 3
-CARACTER_ACENTUADO   : 13
-CARACTER_ESPECIAL    : 12
-CARACTER_NAO_IMPRIMIVEL : 14
-ESCREVER             : 1
-IDENTIFICADOR        : 3 10
-INTERPOLACAO         : 11
-LPAREN               : 1 8
-MINUS                : 7
-NUMERO               : 9
-PLUS                 : 6
-RPAREN               : 1 8
-STRING               : 4
+CARACTER_ACENTUADO   : 9
+CARACTER_ESPECIAL    : 8
+ESCREVER             : 2
+LPAREN               : 2 5
+MINUS                : 4
+NUMERO               : 6
+PLUS                 : 3
+RPAREN               : 2 5
+STRING               : 7
 error                : 
 
 Nonterminals, with rules where they appear
 
-atribuicao           : 2
-expressao            : 5 6 6 7 7 8
-instrucao            : 0
-valor                : 1 3
+S                    : 0
+comando              : 1
+expressao            : 2 3 3 4 4 5
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . instrucao
-    (1) instrucao -> . ESCREVER LPAREN valor RPAREN
-    (2) instrucao -> . atribuicao
-    (3) atribuicao -> . IDENTIFICADOR = valor
+    (0) S' -> . S
+    (1) S -> . comando
+    (2) comando -> . ESCREVER LPAREN expressao RPAREN
 
-    ESCREVER        shift and go to state 2
-    IDENTIFICADOR   shift and go to state 4
+    ESCREVER        shift and go to state 3
 
-    instrucao                      shift and go to state 1
-    atribuicao                     shift and go to state 3
+    S                              shift and go to state 1
+    comando                        shift and go to state 2
 
 state 1
 
-    (0) S' -> instrucao .
+    (0) S' -> S .
 
 
 
 state 2
 
-    (1) instrucao -> ESCREVER . LPAREN valor RPAREN
+    (1) S -> comando .
 
-    LPAREN          shift and go to state 5
+    $end            reduce using rule 1 (S -> comando .)
 
 
 state 3
 
-    (2) instrucao -> atribuicao .
+    (2) comando -> ESCREVER . LPAREN expressao RPAREN
 
-    $end            reduce using rule 2 (instrucao -> atribuicao .)
+    LPAREN          shift and go to state 4
 
 
 state 4
 
-    (3) atribuicao -> IDENTIFICADOR . = valor
+    (2) comando -> ESCREVER LPAREN . expressao RPAREN
+    (3) expressao -> . expressao PLUS expressao
+    (4) expressao -> . expressao MINUS expressao
+    (5) expressao -> . LPAREN expressao RPAREN
+    (6) expressao -> . NUMERO
+    (7) expressao -> . STRING
+    (8) expressao -> . CARACTER_ESPECIAL
+    (9) expressao -> . CARACTER_ACENTUADO
 
-    =               shift and go to state 6
+    LPAREN          shift and go to state 5
+    NUMERO          shift and go to state 7
+    STRING          shift and go to state 8
+    CARACTER_ESPECIAL shift and go to state 9
+    CARACTER_ACENTUADO shift and go to state 10
 
+    expressao                      shift and go to state 6
 
 state 5
 
-    (1) instrucao -> ESCREVER LPAREN . valor RPAREN
-    (4) valor -> . STRING
-    (5) valor -> . expressao
-    (6) expressao -> . expressao PLUS expressao
-    (7) expressao -> . expressao MINUS expressao
-    (8) expressao -> . LPAREN expressao RPAREN
-    (9) expressao -> . NUMERO
-    (10) expressao -> . IDENTIFICADOR
-    (11) expressao -> . INTERPOLACAO
-    (12) expressao -> . CARACTER_ESPECIAL
-    (13) expressao -> . CARACTER_ACENTUADO
-    (14) expressao -> . CARACTER_NAO_IMPRIMIVEL
+    (5) expressao -> LPAREN . expressao RPAREN
+    (3) expressao -> . expressao PLUS expressao
+    (4) expressao -> . expressao MINUS expressao
+    (5) expressao -> . LPAREN expressao RPAREN
+    (6) expressao -> . NUMERO
+    (7) expressao -> . STRING
+    (8) expressao -> . CARACTER_ESPECIAL
+    (9) expressao -> . CARACTER_ACENTUADO
 
-    STRING          shift and go to state 9
-    LPAREN          shift and go to state 7
-    NUMERO          shift and go to state 11
-    IDENTIFICADOR   shift and go to state 12
-    INTERPOLACAO    shift and go to state 13
-    CARACTER_ESPECIAL shift and go to state 14
-    CARACTER_ACENTUADO shift and go to state 15
-    CARACTER_NAO_IMPRIMIVEL shift and go to state 16
+    LPAREN          shift and go to state 5
+    NUMERO          shift and go to state 7
+    STRING          shift and go to state 8
+    CARACTER_ESPECIAL shift and go to state 9
+    CARACTER_ACENTUADO shift and go to state 10
 
-    valor                          shift and go to state 8
-    expressao                      shift and go to state 10
+    expressao                      shift and go to state 11
 
 state 6
 
-    (3) atribuicao -> IDENTIFICADOR = . valor
-    (4) valor -> . STRING
-    (5) valor -> . expressao
-    (6) expressao -> . expressao PLUS expressao
-    (7) expressao -> . expressao MINUS expressao
-    (8) expressao -> . LPAREN expressao RPAREN
-    (9) expressao -> . NUMERO
-    (10) expressao -> . IDENTIFICADOR
-    (11) expressao -> . INTERPOLACAO
-    (12) expressao -> . CARACTER_ESPECIAL
-    (13) expressao -> . CARACTER_ACENTUADO
-    (14) expressao -> . CARACTER_NAO_IMPRIMIVEL
+    (2) comando -> ESCREVER LPAREN expressao . RPAREN
+    (3) expressao -> expressao . PLUS expressao
+    (4) expressao -> expressao . MINUS expressao
 
-    STRING          shift and go to state 9
-    LPAREN          shift and go to state 7
-    NUMERO          shift and go to state 11
-    IDENTIFICADOR   shift and go to state 12
-    INTERPOLACAO    shift and go to state 13
-    CARACTER_ESPECIAL shift and go to state 14
-    CARACTER_ACENTUADO shift and go to state 15
-    CARACTER_NAO_IMPRIMIVEL shift and go to state 16
+    RPAREN          shift and go to state 12
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
 
-    valor                          shift and go to state 17
-    expressao                      shift and go to state 10
 
 state 7
 
-    (8) expressao -> LPAREN . expressao RPAREN
-    (6) expressao -> . expressao PLUS expressao
-    (7) expressao -> . expressao MINUS expressao
-    (8) expressao -> . LPAREN expressao RPAREN
-    (9) expressao -> . NUMERO
-    (10) expressao -> . IDENTIFICADOR
-    (11) expressao -> . INTERPOLACAO
-    (12) expressao -> . CARACTER_ESPECIAL
-    (13) expressao -> . CARACTER_ACENTUADO
-    (14) expressao -> . CARACTER_NAO_IMPRIMIVEL
+    (6) expressao -> NUMERO .
 
-    LPAREN          shift and go to state 7
-    NUMERO          shift and go to state 11
-    IDENTIFICADOR   shift and go to state 12
-    INTERPOLACAO    shift and go to state 13
-    CARACTER_ESPECIAL shift and go to state 14
-    CARACTER_ACENTUADO shift and go to state 15
-    CARACTER_NAO_IMPRIMIVEL shift and go to state 16
+    RPAREN          reduce using rule 6 (expressao -> NUMERO .)
+    PLUS            reduce using rule 6 (expressao -> NUMERO .)
+    MINUS           reduce using rule 6 (expressao -> NUMERO .)
 
-    expressao                      shift and go to state 18
 
 state 8
 
-    (1) instrucao -> ESCREVER LPAREN valor . RPAREN
+    (7) expressao -> STRING .
 
-    RPAREN          shift and go to state 19
+    RPAREN          reduce using rule 7 (expressao -> STRING .)
+    PLUS            reduce using rule 7 (expressao -> STRING .)
+    MINUS           reduce using rule 7 (expressao -> STRING .)
 
 
 state 9
 
-    (4) valor -> STRING .
+    (8) expressao -> CARACTER_ESPECIAL .
 
-    RPAREN          reduce using rule 4 (valor -> STRING .)
-    $end            reduce using rule 4 (valor -> STRING .)
+    RPAREN          reduce using rule 8 (expressao -> CARACTER_ESPECIAL .)
+    PLUS            reduce using rule 8 (expressao -> CARACTER_ESPECIAL .)
+    MINUS           reduce using rule 8 (expressao -> CARACTER_ESPECIAL .)
 
 
 state 10
 
-    (5) valor -> expressao .
-    (6) expressao -> expressao . PLUS expressao
-    (7) expressao -> expressao . MINUS expressao
+    (9) expressao -> CARACTER_ACENTUADO .
 
-    RPAREN          reduce using rule 5 (valor -> expressao .)
-    $end            reduce using rule 5 (valor -> expressao .)
-    PLUS            shift and go to state 20
-    MINUS           shift and go to state 21
+    RPAREN          reduce using rule 9 (expressao -> CARACTER_ACENTUADO .)
+    PLUS            reduce using rule 9 (expressao -> CARACTER_ACENTUADO .)
+    MINUS           reduce using rule 9 (expressao -> CARACTER_ACENTUADO .)
 
 
 state 11
 
-    (9) expressao -> NUMERO .
+    (5) expressao -> LPAREN expressao . RPAREN
+    (3) expressao -> expressao . PLUS expressao
+    (4) expressao -> expressao . MINUS expressao
 
-    PLUS            reduce using rule 9 (expressao -> NUMERO .)
-    MINUS           reduce using rule 9 (expressao -> NUMERO .)
-    RPAREN          reduce using rule 9 (expressao -> NUMERO .)
-    $end            reduce using rule 9 (expressao -> NUMERO .)
+    RPAREN          shift and go to state 15
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
 
 
 state 12
 
-    (10) expressao -> IDENTIFICADOR .
+    (2) comando -> ESCREVER LPAREN expressao RPAREN .
 
-    PLUS            reduce using rule 10 (expressao -> IDENTIFICADOR .)
-    MINUS           reduce using rule 10 (expressao -> IDENTIFICADOR .)
-    RPAREN          reduce using rule 10 (expressao -> IDENTIFICADOR .)
-    $end            reduce using rule 10 (expressao -> IDENTIFICADOR .)
+    $end            reduce using rule 2 (comando -> ESCREVER LPAREN expressao RPAREN .)
 
 
 state 13
 
-    (11) expressao -> INTERPOLACAO .
+    (3) expressao -> expressao PLUS . expressao
+    (3) expressao -> . expressao PLUS expressao
+    (4) expressao -> . expressao MINUS expressao
+    (5) expressao -> . LPAREN expressao RPAREN
+    (6) expressao -> . NUMERO
+    (7) expressao -> . STRING
+    (8) expressao -> . CARACTER_ESPECIAL
+    (9) expressao -> . CARACTER_ACENTUADO
 
-    PLUS            reduce using rule 11 (expressao -> INTERPOLACAO .)
-    MINUS           reduce using rule 11 (expressao -> INTERPOLACAO .)
-    RPAREN          reduce using rule 11 (expressao -> INTERPOLACAO .)
-    $end            reduce using rule 11 (expressao -> INTERPOLACAO .)
+    LPAREN          shift and go to state 5
+    NUMERO          shift and go to state 7
+    STRING          shift and go to state 8
+    CARACTER_ESPECIAL shift and go to state 9
+    CARACTER_ACENTUADO shift and go to state 10
 
+    expressao                      shift and go to state 16
 
 state 14
 
-    (12) expressao -> CARACTER_ESPECIAL .
+    (4) expressao -> expressao MINUS . expressao
+    (3) expressao -> . expressao PLUS expressao
+    (4) expressao -> . expressao MINUS expressao
+    (5) expressao -> . LPAREN expressao RPAREN
+    (6) expressao -> . NUMERO
+    (7) expressao -> . STRING
+    (8) expressao -> . CARACTER_ESPECIAL
+    (9) expressao -> . CARACTER_ACENTUADO
 
-    PLUS            reduce using rule 12 (expressao -> CARACTER_ESPECIAL .)
-    MINUS           reduce using rule 12 (expressao -> CARACTER_ESPECIAL .)
-    RPAREN          reduce using rule 12 (expressao -> CARACTER_ESPECIAL .)
-    $end            reduce using rule 12 (expressao -> CARACTER_ESPECIAL .)
+    LPAREN          shift and go to state 5
+    NUMERO          shift and go to state 7
+    STRING          shift and go to state 8
+    CARACTER_ESPECIAL shift and go to state 9
+    CARACTER_ACENTUADO shift and go to state 10
 
+    expressao                      shift and go to state 17
 
 state 15
 
-    (13) expressao -> CARACTER_ACENTUADO .
+    (5) expressao -> LPAREN expressao RPAREN .
 
-    PLUS            reduce using rule 13 (expressao -> CARACTER_ACENTUADO .)
-    MINUS           reduce using rule 13 (expressao -> CARACTER_ACENTUADO .)
-    RPAREN          reduce using rule 13 (expressao -> CARACTER_ACENTUADO .)
-    $end            reduce using rule 13 (expressao -> CARACTER_ACENTUADO .)
+    RPAREN          reduce using rule 5 (expressao -> LPAREN expressao RPAREN .)
+    PLUS            reduce using rule 5 (expressao -> LPAREN expressao RPAREN .)
+    MINUS           reduce using rule 5 (expressao -> LPAREN expressao RPAREN .)
 
 
 state 16
 
-    (14) expressao -> CARACTER_NAO_IMPRIMIVEL .
+    (3) expressao -> expressao PLUS expressao .
+    (3) expressao -> expressao . PLUS expressao
+    (4) expressao -> expressao . MINUS expressao
 
-    PLUS            reduce using rule 14 (expressao -> CARACTER_NAO_IMPRIMIVEL .)
-    MINUS           reduce using rule 14 (expressao -> CARACTER_NAO_IMPRIMIVEL .)
-    RPAREN          reduce using rule 14 (expressao -> CARACTER_NAO_IMPRIMIVEL .)
-    $end            reduce using rule 14 (expressao -> CARACTER_NAO_IMPRIMIVEL .)
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+    RPAREN          reduce using rule 3 (expressao -> expressao PLUS expressao .)
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+
+  ! PLUS            [ reduce using rule 3 (expressao -> expressao PLUS expressao .) ]
+  ! MINUS           [ reduce using rule 3 (expressao -> expressao PLUS expressao .) ]
 
 
 state 17
 
-    (3) atribuicao -> IDENTIFICADOR = valor .
-
-    $end            reduce using rule 3 (atribuicao -> IDENTIFICADOR = valor .)
-
-
-state 18
-
-    (8) expressao -> LPAREN expressao . RPAREN
-    (6) expressao -> expressao . PLUS expressao
-    (7) expressao -> expressao . MINUS expressao
-
-    RPAREN          shift and go to state 22
-    PLUS            shift and go to state 20
-    MINUS           shift and go to state 21
-
-
-state 19
-
-    (1) instrucao -> ESCREVER LPAREN valor RPAREN .
-
-    $end            reduce using rule 1 (instrucao -> ESCREVER LPAREN valor RPAREN .)
-
-
-state 20
-
-    (6) expressao -> expressao PLUS . expressao
-    (6) expressao -> . expressao PLUS expressao
-    (7) expressao -> . expressao MINUS expressao
-    (8) expressao -> . LPAREN expressao RPAREN
-    (9) expressao -> . NUMERO
-    (10) expressao -> . IDENTIFICADOR
-    (11) expressao -> . INTERPOLACAO
-    (12) expressao -> . CARACTER_ESPECIAL
-    (13) expressao -> . CARACTER_ACENTUADO
-    (14) expressao -> . CARACTER_NAO_IMPRIMIVEL
-
-    LPAREN          shift and go to state 7
-    NUMERO          shift and go to state 11
-    IDENTIFICADOR   shift and go to state 12
-    INTERPOLACAO    shift and go to state 13
-    CARACTER_ESPECIAL shift and go to state 14
-    CARACTER_ACENTUADO shift and go to state 15
-    CARACTER_NAO_IMPRIMIVEL shift and go to state 16
-
-    expressao                      shift and go to state 23
-
-state 21
-
-    (7) expressao -> expressao MINUS . expressao
-    (6) expressao -> . expressao PLUS expressao
-    (7) expressao -> . expressao MINUS expressao
-    (8) expressao -> . LPAREN expressao RPAREN
-    (9) expressao -> . NUMERO
-    (10) expressao -> . IDENTIFICADOR
-    (11) expressao -> . INTERPOLACAO
-    (12) expressao -> . CARACTER_ESPECIAL
-    (13) expressao -> . CARACTER_ACENTUADO
-    (14) expressao -> . CARACTER_NAO_IMPRIMIVEL
-
-    LPAREN          shift and go to state 7
-    NUMERO          shift and go to state 11
-    IDENTIFICADOR   shift and go to state 12
-    INTERPOLACAO    shift and go to state 13
-    CARACTER_ESPECIAL shift and go to state 14
-    CARACTER_ACENTUADO shift and go to state 15
-    CARACTER_NAO_IMPRIMIVEL shift and go to state 16
-
-    expressao                      shift and go to state 24
-
-state 22
-
-    (8) expressao -> LPAREN expressao RPAREN .
-
-    PLUS            reduce using rule 8 (expressao -> LPAREN expressao RPAREN .)
-    MINUS           reduce using rule 8 (expressao -> LPAREN expressao RPAREN .)
-    RPAREN          reduce using rule 8 (expressao -> LPAREN expressao RPAREN .)
-    $end            reduce using rule 8 (expressao -> LPAREN expressao RPAREN .)
-
-
-state 23
-
-    (6) expressao -> expressao PLUS expressao .
-    (6) expressao -> expressao . PLUS expressao
-    (7) expressao -> expressao . MINUS expressao
+    (4) expressao -> expressao MINUS expressao .
+    (3) expressao -> expressao . PLUS expressao
+    (4) expressao -> expressao . MINUS expressao
 
   ! shift/reduce conflict for PLUS resolved as shift
   ! shift/reduce conflict for MINUS resolved as shift
-    RPAREN          reduce using rule 6 (expressao -> expressao PLUS expressao .)
-    $end            reduce using rule 6 (expressao -> expressao PLUS expressao .)
-    PLUS            shift and go to state 20
-    MINUS           shift and go to state 21
+    RPAREN          reduce using rule 4 (expressao -> expressao MINUS expressao .)
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
 
-  ! PLUS            [ reduce using rule 6 (expressao -> expressao PLUS expressao .) ]
-  ! MINUS           [ reduce using rule 6 (expressao -> expressao PLUS expressao .) ]
-
-
-state 24
-
-    (7) expressao -> expressao MINUS expressao .
-    (6) expressao -> expressao . PLUS expressao
-    (7) expressao -> expressao . MINUS expressao
-
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-    RPAREN          reduce using rule 7 (expressao -> expressao MINUS expressao .)
-    $end            reduce using rule 7 (expressao -> expressao MINUS expressao .)
-    PLUS            shift and go to state 20
-    MINUS           shift and go to state 21
-
-  ! PLUS            [ reduce using rule 7 (expressao -> expressao MINUS expressao .) ]
-  ! MINUS           [ reduce using rule 7 (expressao -> expressao MINUS expressao .) ]
+  ! PLUS            [ reduce using rule 4 (expressao -> expressao MINUS expressao .) ]
+  ! MINUS           [ reduce using rule 4 (expressao -> expressao MINUS expressao .) ]
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for PLUS in state 23 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 23 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 24 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 24 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 16 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 16 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 17 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 17 resolved as shift
