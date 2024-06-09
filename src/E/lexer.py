@@ -10,6 +10,7 @@ tokens = (
     'GT', 'LT', 'GE', 'LE', 'EQ', 'NE',
 )
 
+# Token definitions
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
@@ -70,7 +71,8 @@ def t_NUMBER(t):
 
 def t_STRING(t):
     r'\'[^\']*\''
-    t.value = t.value[1:-1] 
+    t.value = t.value[1:-1]  # remove quotes
+    return t
 
 t_ignore = ' \t'
 
@@ -143,7 +145,6 @@ def p_statement_while(p):
 
 def p_statement_def(p):
     'statement_def : DEF ID LPAREN RPAREN COLON statement_list RETURN expression SEMICOLON END'
-    print(f"Defining function {p[2]} with body {p[6]} and return {p[8]}")
     functions[p[2]] = (p[6], p[8])
     p[0] = None
 
@@ -231,13 +232,11 @@ def evaluate_expression(expr):
         elif expr[0] == 'concat':
             return str(evaluate_expression(expr[1])) + str(evaluate_expression(expr[2]))
         elif expr[0] == 'call':
-            if expr[1] in functions:
-                func_body, ret_expr = functions[expr[1]]
-                print(f"Calling function {expr[1]} with body {func_body} and return {ret_expr}")
-                execute_block(func_body)
-                return evaluate_expression(ret_expr)
-            else:
+            func_body, ret_expr = functions.get(expr[1], (None, None))
+            if func_body is None:
                 return f"Undefined function '{expr[1]}'"
+            execute_block(func_body)
+            return evaluate_expression(ret_expr)
     else:
         return expr
 
@@ -271,6 +270,7 @@ def execute_statement(statement):
     elif statement[0] == 'return':
         return ('return', evaluate_expression(statement[1]))
 
+# idade = 18;
 # ESCREVER(idade);
 # ESCREVER('A tua idade: ' <> idade);
 # ESCREVER(365+2);
@@ -284,12 +284,11 @@ def execute_statement(statement):
 # resultado = add();
 # ESCREVER('Resultado: ' <> resultado);
 code = '''
-idade = 17;
 IF idade > 17:
     ESCREVER('Maior de idade');
 ELSE:
     ESCREVER('Menor de idade');
-WHILE idade < 21:
+WHILE idade < 20:
     idade = idade + 1;
     ESCREVER(idade);
 '''
