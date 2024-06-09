@@ -38,7 +38,7 @@ pip install ply
    To run the application with an FCA file:
 
 ```bash
-python main.py entrada.fca
+python lexer.py
 ```
 
 To run the application and input commands directly via the terminal:
@@ -71,14 +71,6 @@ Expected output when running the above example:
 - Abstract Syntax Tree (AST): Represents the structure of the FCA program.
 - Semantic Actions: Translates FCA commands into executable actions.
 - Code Generation: Optionally generates C code corresponding to the FCA program.
-
-# Optional Features
-
-- Generate a C file corresponding to the FCA program by running:
-
-```bash
-python main.py entrada.fca -o output.c
-```
 
 # Contribution
 

@@ -1,5 +1,6 @@
 import ply.lex as lex
 import ply.yacc as yacc
+import random
 
 tokens = (
     'ID',
@@ -15,6 +16,8 @@ tokens = (
     'CONCAT',
     'LPAREN',
     'RPAREN',
+    'ENTRADA',
+    'ALEATORIO',
 )
 
 t_PLUS = r'\+'
@@ -36,6 +39,21 @@ def t_NUMBER(t):
     r'\d+'
     t.value = int(t.value)
     return t
+
+def t_ENTRADA(t):
+    r'ENTRADA'
+    return t
+
+# def t_ALEATORIO(t):
+#     r'ALEATORIO\s*\(\s*\d+\s*\)'
+#     t.value = random.randint(0, int(t.value.split('(')[1].split(')')[0]))
+#     return t
+
+def t_ALEATORIO(t):
+    r'ALEATORIO\s*\(\s*\d+\s*\)'
+    t.value = int(t.value.split('(')[1].split(')')[0])
+    return t
+
 
 def t_STRING(t):
     r'\'[^\']*\''
@@ -64,9 +82,22 @@ def p_statement_assign(p):
     'statement : ID ASSIGN expression SEMICOLON'
     variables[p[1]] = p[3]
 
+# def p_statement_escrever(p):
+#     'statement : ESCREVER LPAREN expression RPAREN SEMICOLON'
+#     print(evaluate_expression(p[3]))
+#     if isinstance(p[3], str):
+#         print(p[3])
+#     else:
+#         print(p[3])
 def p_statement_escrever(p):
     'statement : ESCREVER LPAREN expression RPAREN SEMICOLON'
     print(evaluate_expression(p[3]))
+
+
+def p_statement_entrada(p):
+    '''statement : ID ASSIGN ENTRADA LPAREN RPAREN SEMICOLON
+                 | ID ASSIGN ENTRADA SEMICOLON'''
+    variables[p[1]] = int(input("Insira um valor para " + p[1] + ": "))
 
 def p_expression_binop(p):
     '''expression : expression PLUS expression
@@ -96,9 +127,17 @@ def p_expression_id(p):
         print(f"Undefined name '{p[1]}'")
         p[0] = 0
 
+def p_expression_entrada(p):
+    'expression : ENTRADA'
+    p[0] = int(input("Insira um valor: "))
+
+def p_expression_aleatorio(p):
+    'expression : ALEATORIO'
+    p[0] = random.randint(0, p[1])
+
 def p_error(p):
     if p:
-        print(f"Syntax error at '{p.value}'")
+        print("Erro sintático na posição: ", p.lexpos , "ao analisar:", p.value)
     else:
         print("Syntax error at EOF")
 
@@ -129,6 +168,10 @@ ESCREVER('A tua idade: ' <> idade);
 ESCREVER(365 + 5);
 curso = 'ESI';
 ESCREVER('OLA, ' <> curso);
+valor = ENTRADA();
+ate10 = ALEATORIO(10);
+ESCREVER(ate10);
+ESCREVER(ENTRADA);
 '''
 
 lexer.input(code)
