@@ -1,7 +1,6 @@
 import ply.lex as lex
 import ply.yacc as yacc
 
-# Define tokens
 tokens = (
     'ID',
     'NUMBER',
@@ -18,7 +17,6 @@ tokens = (
     'RPAREN',
 )
 
-# Define token regex patterns
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
@@ -41,24 +39,19 @@ def t_NUMBER(t):
 
 def t_STRING(t):
     r'\'[^\']*\''
-    t.value = t.value[1:-1]  # remove quotes
+    t.value = t.value[1:-1]  
     return t
 
-# Define ignored characters (whitespace and tabs)
 t_ignore = ' \t\n'
 
-# Define error handling rule
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
-# Build the lexer
 lexer = lex.lex()
 
-# Define variable storage
 variables = {}
 
-# Define parser rules
 def p_program(p):
     '''program : statement
                | program statement'''
@@ -103,17 +96,14 @@ def p_expression_id(p):
         print(f"Undefined name '{p[1]}'")
         p[0] = 0
 
-# Define error handling rule
 def p_error(p):
     if p:
         print(f"Syntax error at '{p.value}'")
     else:
         print("Syntax error at EOF")
 
-# Build the parser
 parser = yacc.yacc()
 
-# Evaluate expression
 def evaluate_expression(expr):
     if isinstance(expr, tuple):
         op, left, right = expr
@@ -132,7 +122,6 @@ def evaluate_expression(expr):
     else:
         return expr
 
-# Test the parser
 code = '''
 idade = 18;
 ESCREVER(idade);

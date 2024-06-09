@@ -10,7 +10,6 @@ tokens = (
     'GT', 'LT', 'GE', 'LE', 'EQ', 'NE',
 )
 
-# Token definitions
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
@@ -71,8 +70,7 @@ def t_NUMBER(t):
 
 def t_STRING(t):
     r'\'[^\']*\''
-    t.value = t.value[1:-1]  # remove quotes
-    return t
+    t.value = t.value[1:-1] 
 
 t_ignore = ' \t'
 

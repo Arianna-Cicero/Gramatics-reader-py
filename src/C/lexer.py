@@ -1,7 +1,6 @@
 import ply.lex as lex
 import ply.yacc as yacc
 
-# Define tokens
 tokens = (
     'ID',
     'NUMBER',
@@ -22,7 +21,6 @@ tokens = (
     'RETURN'
 )
 
-# Define token regex patterns
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
@@ -52,22 +50,17 @@ def t_STRING(t):
     t.value = t.value[1:-1]  # remove quotes
     return t
 
-# Define ignored characters (whitespace and tabs)
 t_ignore = ' \t\n'
 
-# Define error handling rule
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
-# Build the lexer
 lexer = lex.lex()
 
-# Define variable and function storage
 variables = {}
 functions = {}
 
-# Define parser rules
 def p_program(p):
     '''program : statement
                | program statement'''
@@ -154,17 +147,14 @@ def p_empty(p):
     'empty :'
     pass
 
-# Define error handling rule
 def p_error(p):
     if p:
         print(f"Syntax error at '{p.value}'")
     else:
         print("Syntax error at EOF")
 
-# Build the parser
 parser = yacc.yacc()
 
-# Evaluate expression
 def evaluate_expression(expr, local_vars=None):
     if local_vars is None:
         local_vars = variables
@@ -204,7 +194,6 @@ def evaluate_expression(expr, local_vars=None):
     else:
         return expr
 
-# Evaluate statements
 def evaluate_statements(statements, local_vars):
     result = None
     for statement in statements:
@@ -224,7 +213,6 @@ def evaluate_statement(statement, local_vars):
     else:
         evaluate_expression(statement, local_vars)
 
-# Test the parser
 code = '''
 DEF add(a, b)
     RETURN a + b;

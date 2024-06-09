@@ -1,17 +1,14 @@
 import ply.yacc as yacc
 from lexer import tokens
-# from lexer import tokens
 
 variaveis : dict = {}
 
-# Regras de precedência
 precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE'),
     ('right', 'UMINUS'),
 )
 
-# Regras do parser
 def p_inicio(p):
     '''S : comando
          | atribuicao'''

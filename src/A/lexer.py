@@ -1,6 +1,5 @@
 import ply.lex as lex
 
-# Tokens
 tokens = [
     'PRINT',
     'NUMERO',
